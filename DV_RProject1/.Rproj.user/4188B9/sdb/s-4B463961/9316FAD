@@ -1,0 +1,18 @@
+{
+    "contents" : "require(\"ggplot2\")\n\nrequire(\"ggthemes\")\n\nrequire(\"gplots\")\n\nrequire(\"grid\")\n\nrequire(\"RCurl\")\n\nrequire(\"reshape2\")\n\nrequire(\"rstudio\")\n\nrequire(\"tableplot\")\n\nrequire(\"tidyr\")\n\nrequire(\"dplyr\")\n\nrequire(\"jsonlite\")\n\nrequire(\"extrafont\")\n\nrequire(\"lubridate\")",
+    "created" : 1442271145196.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "1633910076",
+    "id" : "9316FAD",
+    "lastKnownWriteTime" : 3418354609641488384,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

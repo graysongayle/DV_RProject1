@@ -1,0 +1,18 @@
+{
+    "contents" : "require(\"jsonlite\")\nrequire(\"RCurl\")\n# Change the USER and PASS below to be your UTEid\ndf <- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/native/?query=\"select * from titanic\"'),httpheader=c(DB='jdbc:oracle:thin:@129.152.144.84:1521/PDBF15DV.usuniversi01134.oraclecloud.internal', USER='cs329e_gmg954', PASS='orcl_gmg954', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE), ))\ndf\nsummary(df)\nhead(df)\n\nrequire(extrafont)\nggplot() + \n  coord_cartesian() + \n  scale_x_continuous() +\n  scale_y_continuous() +\n  #facet_wrap(~SURVIVED) +\n  #facet_grid(.~SURVIVED, labeller=label_both) + # Same as facet_wrap but with a label.\n  #facet_grid(PCLASS~SURVIVED, labeller=label_both) +\n  labs(title='Titanic') +\n  labs(x=\"Age\", y=paste(\"Fare\")) +\n  layer(data=df, \n        mapping=aes(x=as.numeric(as.character(AGE)), y=as.numeric(as.character(FARE)), color=SEX), \n        stat=\"identity\", \n        stat_params=list(), \n        geom=\"point\",\n        geom_params=list(), \n        #position=position_identity()\n        position=position_jitter(width=0.3, height=0)\n  )\n\nggplot() + \n  coord_cartesian() + \n  scale_x_discrete() +\n  scale_y_continuous() +\n  facet_grid(PCLASS~SURVIVED, labeller=label_both) +\n  labs(title='Titanic') +\n  labs(x=\"SURVIVED\", y=paste(\"FARE\")) +\n  layer(data=df, \n        mapping=aes(x=SEX, y=as.numeric(as.character(FARE)), color=SEX), \n        stat=\"identity\", \n        stat_params=list(), \n        geom=\"point\",\n        geom_params=list(), \n        #position=position_identity()\n        position=position_jitter(width=0.3, height=0)\n  )",
+    "created" : 1442271054258.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4035690710",
+    "id" : "B8978301",
+    "lastKnownWriteTime" : 1442272464,
+    "path" : "~/DV_RProject1/02 Visualizations/Titanic Analysis.R",
+    "project_path" : "02 Visualizations/Titanic Analysis.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
