@@ -1,0 +1,119 @@
+---
+title: "Titanic Analysis"
+output: 
+  html_document:
+    theme: cosmo
+Author: "Grayson Gayle, Madeline Nash, David Schluckebier"
+Date: Due September 15, 2015 11:59 pm
+---
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/RMS_Titanic_3.jpg/600px-RMS_Titanic_3.jpg)
+
+First We created a **.Rprofile txt** document at the same level as our R script to run the needed packages
+
+```{r}
+require("ggplot2")
+require("ggthemes")
+require("gplots")
+require("grid")
+require("RCurl")
+require("reshape2")
+require("rstudio")
+require("tableplot")
+require("tidyr")
+require("dplyr")
+require("jsonlite")
+require("extrafont")
+require("lubridate")
+```
+
+Next, we loaded the data frame from the online oracle cloud server using the following code.
+
+```{r}
+df <- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/native/?query="select * from titanic"'),httpheader=c(DB='jdbc:oracle:thin:@129.152.144.84:1521/PDBF15DV.usuniversi01134.oraclecloud.internal', USER='cs329e_gmg954', PASS='orcl_gmg954', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE), ))
+```
+
+**Summary Statistics**
+These show the first six items of the dataframe 
+```{r}
+source("../01 Data/SummaryStats.R", echo = TRUE)
+```
+
+We created five individual R scripts entitled Titanic Analysis num (where num corresponds to the plot number).
+
+The first plot entitled **Rplot1.png** was created using the following R script:
+
+```{r}
+require("ggplot2")
+require("jsonlite")
+require("RCurl")
+# Change the USER and PASS below to be your UTEid
+df <- data.frame(fromJSON(getURL(URLencode('129.152.144.84:5001/rest/native/?query="select * from titanic"'),httpheader=c(DB='jdbc:oracle:thin:@129.152.144.84:1521/PDBF15DV.usuniversi01134.oraclecloud.internal', USER='cs329e_gmg954', PASS='orcl_gmg954', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE), ))
+
+require(extrafont)
+ggplot() + 
+  coord_cartesian() + 
+  scale_x_continuous() +
+  scale_y_continuous() +
+  #facet_wrap(~SURVIVED) +
+  #facet_grid(.~SURVIVED, labeller=label_both) + # Same as facet_wrap but with a label.
+  #facet_grid(PCLASS~SURVIVED, labeller=label_both) +
+  labs(title='Titanic') +
+  labs(x="Age", y=paste("Fare")) +
+  layer(data=df, 
+        mapping=aes(x=as.numeric(as.character(AGE)), y=as.numeric(as.character(FARE)), color=SEX), 
+        stat="identity", 
+        stat_params=list(), 
+        geom="point",
+        geom_params=list(), 
+        #position=position_identity()
+        position=position_jitter(width=0.3, height=0)
+  )
+```
+
+* This first plot above shows the fare that males, females, and null individuals paid*
+
+The second plot entitled **RPlot2.png** was created:
+
+```{r}
+source("../02 Visualizations/Titanic Analysis2.R" , echo = TRUE)
+```
+* This second plot shows fare that males and females paid where sex was not classified as null*
+
+The third plot entitled **RPlot3.png** was created:
+
+```{r}
+source("../02 Visualizations/Titanic Analysis3.R" , echo = TRUE)
+```
+
+* This thrid plot shows the males and females that survived and did not survive (the legend)*
+
+We noticed that more females survived than males did. This may be because females were loaded onto the lifeboats first.
+
+The fourth plot entitled **RPlot4.png** was created:
+
+```{r}
+source("../02 Visualizations/Titanic Analysis4.R" , echo = TRUE)
+```
+
+*The plot above shows the females and males (legend) who survived and did not survive according to thier assigned PClass*
+This graph includes adults and children under the age of ten.
+
+The fifth plot entitled **RPlot5.png** was created:
+
+```{r}
+source("../02 Visualizations/Titanic Analysis5.R" , echo = TRUE)
+```
+
+
+When you compare this plot to the previous plot, you notice that 
+
+Of the children whose age was less than or equal to 10 years old we see that most children survived ad were in all classes. However, none died in PClass 2. The data supports that PClass 1 was given priority.
+
+
+We were prompted to create our own plot that showed data. The following is the plot we created:
+```{r}
+source("../02 Visualizations/Extra Analysis.R" , echo = TRUE)
+```
+
+
